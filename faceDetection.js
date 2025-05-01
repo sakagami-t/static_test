@@ -1,4 +1,4 @@
-import * as faceapi from 'face-api.js';
+const faceapi = require('face-api.js');
 
 async function loadModels() {
     await faceapi.nets.tinyFaceDetector.loadFromUri('/models');
@@ -27,4 +27,4 @@ function drawDetections(video, detections) {
     document.body.append(canvas);
 }
 
-export { loadModels, detectFaces, drawDetections };
+module.exports = { loadModels, detectFaces, drawDetections };
