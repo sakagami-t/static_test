@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Camera Feed</title>
+    <script defer src="https://cdn.jsdelivr.net/npm/face-api.js"></script>
+    <script defer src="faceDetection.js"></script>
 </head>
 <body>
     <h1>Camera Feed</h1>
@@ -15,6 +17,15 @@
                 var video = document.getElementById('video');
                 video.srcObject = stream;
                 video.play();
+
+                // Call the face detection function after the video feed starts
+                video.addEventListener('play', async () => {
+                    await loadModels();
+                    setInterval(async () => {
+                        const detections = await detectFaces(video);
+                        drawDetections(video, detections);
+                    }, 100);
+                });
             })
             .catch(function(err) {
                 console.log("An error occurred: " + err);
